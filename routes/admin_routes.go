@@ -17,5 +17,11 @@ func AdminRoutes(router *mux.Router) {
 	updateDoctorRoute:=middleware.RoleBasedJWTMiddleware(http.HandlerFunc(controllers.UpdateDoctor), []string{"Admin"})
     router.Handle("/admin/doctors/{doctorId}", updateDoctorRoute).Methods("PUT")
 
+	getDoctorsRoute:=middleware.RoleBasedJWTMiddleware(http.HandlerFunc(controllers.GetDoctors), []string{"Admin"})
+    router.Handle("/admin/doctors", getDoctorsRoute).Methods("GET")
+
+	deleteDoctorsRoute:=middleware.RoleBasedJWTMiddleware(http.HandlerFunc(controllers.DeleteDoctor), []string{"Admin"})
+    router.Handle("/admin/doctors/{doctorId}", deleteDoctorsRoute).Methods("DELETE")
+
 
 }
