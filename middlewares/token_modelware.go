@@ -54,7 +54,7 @@ func RoleBasedJWTMiddleware(next http.Handler, allowedRoles []string) http.Handl
         }
 
         if !isAllowedAccess(claims.Roles, allowedRoles) {
-            http.Error(w, "Insufficient permissions", http.StatusForbidden)
+            http.Error(w, "Not Allowed", http.StatusForbidden)
             return
         }
 
