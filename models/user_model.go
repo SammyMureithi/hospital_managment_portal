@@ -6,7 +6,7 @@ import (
 
 // User struct to define a user model
 type User struct {
-    ID        string    `json:"id"` // No JSON input expected; remove JSON tag if not serialized
+    ID        string    `json:"id"`
     Username  string    `json:"username" bson:"username" validate:"required,min=3,max=20"`
     Name      string    `json:"name" bson:"name" validate:"required"`
     Email     string    `json:"email" bson:"email" validate:"required,email"`
