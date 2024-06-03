@@ -16,6 +16,8 @@ func main() {
 	// Initialize user routes
 	routes.UserRoutes(router)
 	routes.AdminRoutes(router)
+	routes.DoctorRoutes(router)
+	routes.PatientRoutes(router)
 
 	// Start the server on port 8000 with the router
 	fmt.Println("Server running on port 8000...")
