@@ -11,6 +11,7 @@ type Doctor struct {
     LastName  string    `json:"last_name" bson:"last_name" validate:"required"`
     Email     string    `json:"email" bson:"email" validate:"required,email"`
 	Phone     string    `json:"phone" bson:"phone" validate:"required,len=10"`
+    Available bool      `bson:"available"`
     CreatedAt time.Time `json:"created_at" bson:"created_at"`
     UpdatedAt time.Time `json:"updated_at" bson:"updated_at"`
 }
