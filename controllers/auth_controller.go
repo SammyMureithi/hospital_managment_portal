@@ -48,9 +48,9 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
         Name: signUpReq.Name,
         Email: signUpReq.Email,
 		Role: signUpReq.Role,
-        Password: signUpReq.Password, // will be hashed below
-        ID: uuid.NewString(), // Generate unique ID
-        CreatedAt: time.Now(), // Set created_at and updated_at
+        Password: signUpReq.Password,
+        ID: uuid.NewString(), 
+		CreatedAt: time.Now(), 
         UpdatedAt: time.Now(),
     }
 
@@ -93,11 +93,9 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 
 }
 
+
 //let's have the signup function here
-
 func Login(w http.ResponseWriter, r *http.Request) {
-
-
     var signInReq request.SignInRequest
     decoder := json.NewDecoder(r.Body)
     if err := decoder.Decode(&signInReq); err != nil {
@@ -120,9 +118,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
     ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
     defer cancel()
 
-    // Assuming `database` and `Client` are predefined in your package
     collection := database.OpenCollection(database.Client, "users")
-       // Find user by email
        var user models.User
        err = collection.FindOne(ctx, bson.M{"username": signInReq.Username}).Decode(&user)
        if err != nil {
@@ -153,7 +149,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
            return
        }
    
-       // If you want to generate a token (e.g., JWT), do it here and include it in the response
         token, err := generateJWT(user)
         if err != nil {
             http.Error(w, "Failed to generate token", http.StatusInternalServerError)
@@ -162,20 +157,20 @@ func Login(w http.ResponseWriter, r *http.Request) {
    
        // Return success response (including token if generated)
        w.Header().Set("Content-Type", "application/json")
-	   user.Password = "" //clearing pasword before we send the data
+	   user.Password = "" 
        json.NewEncoder(w).Encode(map[string]interface{}{
            "ok":     true,
            "status": "success",
            "message": "User signed in successfully",
            "users":user,
-            "token":  token, // Include the token if generated
+            "token":  token, 
        })
    
 }
 
-// Function to generate JWT token
+// func to generate JWT token
 func generateJWT(user models.User) (string, error) {
-    expirationTime := time.Now().Add(24 * time.Hour) // Token expires in 24 hours
+    expirationTime := time.Now().Add(24 * time.Hour) 
     claims := &UserClaims{
         Email: user.Email,
 		Roles: []string{user.Role},
