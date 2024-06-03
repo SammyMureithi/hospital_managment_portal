@@ -51,7 +51,8 @@ func CreateDoctor(w http.ResponseWriter, r *http.Request) {
 		LastName: docCreatReq.LastName,
 		Phone: docCreatReq.Phone,
 		Email: docCreatReq.Email,
-        CreatedAt: time.Now(), 
+        Available: false,
+        CreatedAt: time.Now(), // Set created_at and updated_at
         UpdatedAt: time.Now(),
     }
 
@@ -85,7 +86,7 @@ func CreateDoctor(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateDoctor(w http.ResponseWriter, r *http.Request) {
-    // Check and validate the request body
+    // Check and validatethe request body
     var docUpdateReq request.DoctorRequest
     decoder := json.NewDecoder(r.Body)
     if err := decoder.Decode(&docUpdateReq); err != nil {
@@ -220,7 +221,7 @@ func GetDoctors(w http.ResponseWriter, r *http.Request) {
     res_result := map[string]interface{}{
         "ok":         true,
         "status":     "success",
-        "users":      doctors,
+        "patients":      doctors,
         "pagination": pagination, // Include the populated pagination map here
     }
 
